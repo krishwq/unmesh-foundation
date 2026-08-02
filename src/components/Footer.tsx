@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight, Heart, Users, Activity } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Microscope } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -34,13 +34,19 @@ export function Footer() {
         <div>
           <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Quick Links</div>
           <ul className="space-y-3">
+            <li>
+              <Link to="/book-test" className="text-sm text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1.5 transition-colors">
+                <Microscope className="w-4 h-4" />
+                Book Diagnostic Test
+              </Link>
+            </li>
             <li><Link to="/about" className="text-sm text-slate-300 hover:text-white transition-colors">About Us</Link></li>
             <li><Link to="/healthcare" className="text-sm text-slate-300 hover:text-white transition-colors">Healthcare Services</Link></li>
             <li><Link to="/network" className="text-sm text-slate-300 hover:text-white transition-colors">Partner Network</Link></li>
+            <li><Link to="/donate" className="text-sm text-slate-300 hover:text-white transition-colors">Make a Donation</Link></li>
+            <li><Link to="/volunteer" className="text-sm text-slate-300 hover:text-white transition-colors">Volunteer Opportunities</Link></li>
             <li><Link to="/legal-aid" className="text-sm text-slate-300 hover:text-white transition-colors">Legal Aid</Link></li>
-            <li><Link to="/skill-development" className="text-sm text-slate-300 hover:text-white transition-colors">Skill Development</Link></li>
             <li><Link to="/csr" className="text-sm text-slate-300 hover:text-white transition-colors">CSR Partnerships</Link></li>
-            <li><Link to="/team" className="text-sm text-slate-300 hover:text-white transition-colors">Our Medical Team</Link></li>
           </ul>
         </div>
         
@@ -51,9 +57,7 @@ export function Footer() {
             <li><Link to="/about" className="text-sm text-slate-300 hover:text-white transition-colors">Mission & Vision</Link></li>
             <li><Link to="/about" className="text-sm text-slate-300 hover:text-white transition-colors">Governance & Ethics</Link></li>
             <li><Link to="/about" className="text-sm text-slate-300 hover:text-white transition-colors">Patient Rights</Link></li>
-            <li><Link to="/privacy-policy" className="text-sm text-slate-300 hover:text-white transition-colors">Privacy Policy</Link></li>
-            <li><Link to="/annual-reports" className="text-sm text-slate-300 hover:text-white transition-colors">Annual Reports</Link></li>
-            <li><Link to="/contact" className="text-sm text-slate-300 hover:text-white transition-colors">FAQs & Support</Link></li>
+            <li><Link to="/contact" className="text-sm text-slate-300 hover:text-white transition-colors">Contact & Support</Link></li>
           </ul>
         </div>
         

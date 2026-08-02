@@ -22,27 +22,13 @@ import { Team } from './pages/Team';
 import { Network } from './pages/Network';
 import { FindHospital } from './pages/FindHospital';
 import { BecomePartner } from './pages/BecomePartner';
-
-// Admin
-import { AdminLayout } from './components/AdminLayout';
-import { AdminDashboard } from './pages/admin/AdminDashboard';
-import { AdminDoctors } from './pages/admin/AdminDoctors';
-import { AdminPartners } from './pages/admin/AdminPartners';
+import { BookTest } from './pages/BookTest';
 
 export default function App() {
   return (
     <HelmetProvider>
       <Router>
         <Routes>
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="doctors" element={<AdminDoctors />} />
-            <Route path="partners" element={<AdminPartners />} />
-            {/* Placeholders for other admin routes */}
-            <Route path="*" element={<div className="p-8 text-center text-slate-500">Module coming soon...</div>} />
-          </Route>
-
           {/* Public Routes */}
           <Route path="/*" element={
             <Layout>
@@ -51,6 +37,7 @@ export default function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/healthcare" element={<Healthcare />} />
                 <Route path="/services" element={<Services />} />
+                <Route path="/book-test" element={<BookTest />} />
                 <Route path="/legal-aid" element={<LegalAid />} />
                 <Route path="/skill-development" element={<SkillDevelopment />} />
                 <Route path="/team" element={<Team />} />
@@ -71,4 +58,3 @@ export default function App() {
     </HelmetProvider>
   );
 }
-

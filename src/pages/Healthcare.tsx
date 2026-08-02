@@ -1,5 +1,5 @@
 import { SEO } from '../components/SEO';
-import { Microscope, UserCheck, Stethoscope, Activity, Heart, ShieldPlus, Home, Leaf, Syringe, Cross, HandHeart, Users, FileText, Building2, PhoneCall, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Microscope, UserCheck, Stethoscope, Activity, Heart, ShieldPlus, Home, Users, FileText, Building2, PhoneCall, CheckCircle2, AlertCircle, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Healthcare() {
@@ -20,7 +20,7 @@ export function Healthcare() {
 
   const supportServices = [
     { title: 'Hospital Admission Assistance', icon: Building2 },
-    { title: 'Hospital Coordination', icon: HandHeart },
+    { title: 'Hospital Coordination', icon: Building2 },
     { title: 'Referral Services', icon: FileText },
     { title: 'Specialist Appointment Assistance', icon: Stethoscope },
     { title: 'Second Opinion Support', icon: Users },
@@ -37,22 +37,42 @@ export function Healthcare() {
       
       <div className="bg-slate-50 pt-24 pb-16 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <div className="inline-block text-[#D71920] font-bold text-[10px] uppercase tracking-widest bg-red-50 px-3 py-1 rounded mb-6">Clinical Excellence</div>
-            <h1 className="text-4xl md:text-5xl font-black text-[#163E96] tracking-tight mb-6">Integrated Healthcare Services</h1>
-            <p className="text-lg text-slate-600 leading-relaxed">
-              We offer world-class healthcare facilities spanning pathology, expert doctor consultations, dedicated senior citizen care, and a specialized comprehensive pain management center combining Allopathy, Homeopathy, and Ayurveda.
-            </p>
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-16">
+            <div className="max-w-2xl">
+              <div className="inline-block text-[#D71920] font-bold text-[10px] uppercase tracking-widest bg-red-50 px-3 py-1 rounded mb-4">Clinical Excellence</div>
+              <h1 className="text-4xl md:text-5xl font-black text-[#163E96] tracking-tight mb-4">Integrated Healthcare Services</h1>
+              <p className="text-lg text-slate-600 leading-relaxed">
+                We offer world-class healthcare facilities spanning pathology, doctor consultations, senior citizen care, and integrated pain management across Kolkata and Howrah.
+              </p>
+            </div>
+
+            <Link
+              to="/book-test"
+              className="px-8 py-4 bg-[#F5A623] hover:bg-[#d48b14] text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-orange-200 flex items-center gap-2 shrink-0"
+            >
+              <Microscope className="w-5 h-5" />
+              <span>Book Diagnostic Test Now</span>
+            </Link>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-24">
             {services.map(service => (
-              <div key={service.title} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all flex flex-col group">
-                <div className={`w-12 h-12 ${service.bg} rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
-                  <service.icon className={`w-5 h-5 ${service.color}`} />
+              <div key={service.title} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all flex flex-col justify-between group">
+                <div>
+                  <div className={`w-12 h-12 ${service.bg} rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
+                    <service.icon className={`w-5 h-5 ${service.color}`} />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-800 mb-2 leading-tight">{service.title}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-4">{service.desc}</p>
                 </div>
-                <h3 className="text-lg font-bold text-slate-800 mb-3 leading-tight">{service.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{service.desc}</p>
+
+                <Link
+                  to="/book-test"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#163E96] hover:text-[#D71920] pt-2 border-t border-slate-100"
+                >
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Book Test / Visit</span>
+                </Link>
               </div>
             ))}
           </div>
@@ -97,11 +117,16 @@ export function Healthcare() {
           <div className="bg-[#163E96] rounded-3xl p-8 lg:p-12 text-center text-white relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] [background-size:24px_24px]"></div>
             <div className="relative z-10 max-w-2xl mx-auto">
-              <h2 className="text-3xl font-black mb-4">Need Medical Assistance?</h2>
-              <p className="text-blue-100 mb-8">Contact our support team to book an appointment or request home blood collection services.</p>
-              <Link to="/contact" className="inline-block px-8 py-3.5 bg-white text-[#163E96] rounded-full font-bold text-xs uppercase tracking-widest hover:bg-slate-100 transition-colors shadow-lg">
-                Get Support Now
-              </Link>
+              <h2 className="text-3xl font-black mb-4">Need Diagnostic Testing or Blood Collection?</h2>
+              <p className="text-blue-100 mb-8">Book your Pathology Test online or request home blood collection across Kolkata & Howrah.</p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link to="/book-test" className="px-8 py-3.5 bg-[#F5A623] hover:bg-[#d48b14] text-white rounded-full font-bold text-xs uppercase tracking-widest transition-colors shadow-lg">
+                  Book Diagnostic Test
+                </Link>
+                <Link to="/contact" className="px-8 py-3.5 bg-white text-[#163E96] rounded-full font-bold text-xs uppercase tracking-widest hover:bg-slate-100 transition-colors shadow-lg">
+                  Contact Helpline
+                </Link>
+              </div>
             </div>
           </div>
         </div>

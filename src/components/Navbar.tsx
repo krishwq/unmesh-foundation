@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Heart, Handshake, Stethoscope } from 'lucide-react';
+import { Menu, X, Microscope } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { name: 'Home', path: '/' },
   { name: 'About Us', path: '/about' },
   { name: 'Healthcare', path: '/healthcare' },
+  { name: 'Book Test', path: '/book-test' },
   { name: 'Services', path: '/services' },
   { name: 'Network', path: '/network' },
   { name: 'Legal Aid', path: '/legal-aid' },
@@ -45,7 +46,6 @@ export function Navbar() {
           <span className="hidden lg:inline">Global Presence: India | USA | Middle East</span>
         </div>
         <div className="flex gap-4 items-center">
-          <Link to="/admin" className="opacity-80 hover:opacity-100 transition-opacity bg-white/20 px-3 py-1 rounded-full text-[10px]">Admin Login</Link>
           <span className="opacity-80">Registered NGO: 12A & 80G Certified</span>
           <span className="opacity-80 hidden sm:inline">Language: English</span>
         </div>
@@ -64,30 +64,37 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-6">
-            <div className="flex gap-5 text-sm font-semibold text-slate-600">
+          <div className="hidden lg:flex items-center gap-5">
+            <div className="flex gap-4 text-xs font-bold text-slate-700">
               {NAV_LINKS.map((link) => (
                 <Link 
                   key={link.name} 
                   to={link.path}
-                  className={`transition-colors hover:text-[#D71920] ${location.pathname === link.path ? 'text-[#D71920]' : ''}`}
+                  className={`transition-colors hover:text-[#D71920] ${location.pathname === link.path ? 'text-[#D71920] font-black' : ''}`}
                 >
                   {link.name}
                 </Link>
               ))}
             </div>
-            <div className="flex items-center gap-3">
-              <Link to="/volunteer" className="px-4 py-2 rounded-full border-2 border-[#163E96] font-bold text-[11px] uppercase tracking-widest text-[#163E96] hover:bg-[#163E96] hover:text-white transition-colors">
+            <div className="flex items-center gap-2">
+              <Link to="/book-test" className="px-3.5 py-1.5 rounded-full bg-blue-50 border border-[#163E96] font-bold text-[10px] uppercase tracking-wider text-[#163E96] hover:bg-[#163E96] hover:text-white transition-colors flex items-center gap-1">
+                <Microscope className="w-3.5 h-3.5" />
+                Book Test
+              </Link>
+              <Link to="/volunteer" className="px-3 py-1.5 rounded-full border border-slate-300 font-bold text-[10px] uppercase tracking-wider text-slate-700 hover:border-[#163E96] hover:text-[#163E96] transition-colors">
                 Volunteer
               </Link>
-              <Link to="/donate" className="px-6 py-2 rounded-full bg-[#F5A623] hover:bg-[#d48b14] text-white font-bold text-[11px] uppercase tracking-widest shadow-lg shadow-orange-200 transition-all hover:shadow-orange-300">
+              <Link to="/donate" className="px-4 py-1.5 rounded-full bg-[#F5A623] hover:bg-[#d48b14] text-white font-bold text-[10px] uppercase tracking-wider shadow-md shadow-orange-200 transition-all">
                 Donate
               </Link>
             </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="lg:hidden flex items-center">
+          <div className="lg:hidden flex items-center gap-2">
+            <Link to="/book-test" className="px-3 py-1.5 rounded-full bg-[#163E96] text-white font-bold text-[10px] uppercase tracking-wider flex items-center gap-1">
+              <Microscope className="w-3 h-3" /> Book Test
+            </Link>
             <button onClick={() => setIsOpen(!isOpen)} className="text-[#163E96] hover:text-[#D71920] p-2">
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -113,11 +120,14 @@ export function Navbar() {
                     {link.name}
                   </Link>
                 ))}
-                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100">
-                  <Link to="/volunteer" className="text-center px-4 py-3 rounded-xl border-2 border-[#163E96] font-bold text-[11px] uppercase tracking-widest text-[#163E96] hover:bg-[#163E96] hover:text-white transition-colors">
+                <div className="grid grid-cols-3 gap-2 pt-4 border-t border-slate-100">
+                  <Link to="/book-test" className="text-center px-2 py-3 rounded-xl bg-blue-50 border border-[#163E96] font-bold text-[10px] uppercase tracking-wider text-[#163E96]">
+                    Book Test
+                  </Link>
+                  <Link to="/volunteer" className="text-center px-2 py-3 rounded-xl border border-slate-300 font-bold text-[10px] uppercase tracking-wider text-slate-700">
                     Volunteer
                   </Link>
-                  <Link to="/donate" className="text-center px-4 py-3 rounded-xl bg-[#F5A623] text-white font-bold text-[11px] uppercase tracking-widest shadow-md shadow-orange-200">
+                  <Link to="/donate" className="text-center px-2 py-3 rounded-xl bg-[#F5A623] text-white font-bold text-[10px] uppercase tracking-wider shadow-sm">
                     Donate
                   </Link>
                 </div>
