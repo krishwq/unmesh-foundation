@@ -1,0 +1,8 @@
+{
+  "name": "Unmesh Foundation",
+  "description": "A premium international-standard website for Unmesh Foundation (উন্মেশ ফাউন্ডেশন), a registered Indian non-profit organization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

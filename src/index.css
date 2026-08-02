@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #163E96;
+  --color-primary-dark: #0f2c6c;
+  --color-secondary: #148B3A;
+  --color-secondary-dark: #0f6c2c;
+  --color-accent: #F5A623;
+  --color-accent-dark: #d48b14;
+  --color-danger: #D71920;
+  --color-danger-dark: #a61218;
+}
+
+@layer base {
+  html {
+    font-family: 'Google Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+  }
+}

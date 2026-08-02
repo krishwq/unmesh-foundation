@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Curve for Arched Text -->
+    <path id="archTextPath" d="M 68 235 A 190 190 0 0 1 432 235" fill="none" />
+    
+    <!-- Clip to inner circle -->
+    <clipPath id="innerCircleClip">
+      <circle cx="250" cy="250" r="192" />
+    </clipPath>
+
+    <!-- Flame Gradient -->
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#C00A12" />
+      <stop offset="50%" stop-color="#E51D24" />
+      <stop offset="100%" stop-color="#FF5500" />
+    </linearGradient>
+    <linearGradient id="flameHighlight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF5500" />
+      <stop offset="100%" stop-color="#FFCC00" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Golden Thin Ring -->
+  <circle cx="250" cy="250" r="242" fill="none" stroke="#F5A623" stroke-width="3" />
+
+  <!-- Main Inner Blue Circular Border -->
+  <circle cx="250" cy="250" r="198" fill="#FFFFFF" stroke="#163E96" stroke-width="12" />
+
+  <!-- Arched Text "UNMESH FOUNDATION" -->
+  <text font-family="'Google Sans', 'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="33" fill="#163E96" letter-spacing="3.5">
+    <textPath href="#archTextPath" startOffset="50%" text-anchor="middle">UNMESH FOUNDATION</textPath>
+  </text>
+
+  <!-- Inner Artwork inside the blue circle -->
+  <g clip-path="url(#innerCircleClip)">
+    <!-- Top Orange/Gold Background -->
+    <rect x="0" y="0" width="500" height="235" fill="#FAA81A" />
+    <!-- Middle White Stripe -->
+    <rect x="0" y="235" width="500" height="40" fill="#FFFFFF" />
+    <!-- Bottom Green Background -->
+    <rect x="0" y="275" width="500" height="225" fill="#0D8A38" />
+
+    <!-- Sunburst White Rays behind Flame -->
+    <g fill="#FFFFFF" opacity="0.85">
+      <polygon points="250,220 110,210 250,205" />
+      <polygon points="250,220 125,180 250,195" />
+      <polygon points="250,220 150,150 250,185" />
+      <polygon points="250,220 185,125 250,175" />
+      <polygon points="250,220 220,110 250,170" />
+      <polygon points="250,220 250,100 255,170" />
+      <polygon points="250,220 280,110 250,170" />
+      <polygon points="250,220 315,125 250,175" />
+      <polygon points="250,220 350,150 250,185" />
+      <polygon points="250,220 375,180 250,195" />
+      <polygon points="250,220 390,210 250,205" />
+    </g>
+
+    <!-- Flame (Center) -->
+    <!-- Main Flame Outer Body -->
+    <path d="M 250,110 
+             C 275,150 310,185 310,230 
+             C 310,270 285,300 250,330 
+             C 215,300 190,270 190,230 
+             C 190,185 225,150 250,110 Z" 
+          fill="url(#flameGrad)" />
+
+    <!-- Inner Swirl Flame Core -->
+    <path d="M 250,130 
+             C 265,160 290,190 290,225 
+             C 290,255 270,280 250,305 
+             C 240,285 235,260 245,235 
+             C 255,210 250,175 250,130 Z" 
+          fill="url(#flameHighlight)" />
+
+    <!-- White Accent Swirl Line in Flame -->
+    <path d="M 250,125 C 235,165 260,200 248,245 C 240,270 220,285 210,300 C 220,280 225,250 238,225 C 248,200 235,160 250,125 Z" fill="#FFFFFF" opacity="0.9" />
+
+    <!-- Blue Hands Supporting Flame -->
+    <!-- Left Hand -->
+    <path d="M 160,320 
+             C 175,290 195,260 215,285 
+             C 220,292 210,310 200,325 
+             C 220,295 238,280 248,310 
+             C 252,322 240,345 225,360 
+             C 200,385 180,410 170,450 
+             L 250,450 L 250,330 
+             C 240,350 220,380 180,380 
+             C 165,380 155,350 160,320 Z" 
+          fill="#163E96" />
+
+    <!-- Right Hand -->
+    <path d="M 340,320 
+             C 325,290 305,260 285,285 
+             C 280,292 290,310 300,325 
+             C 280,295 262,280 252,310 
+             C 248,322 260,345 275,360 
+             C 300,385 320,410 330,450 
+             L 250,450 L 250,330 
+             C 260,350 280,380 320,380 
+             C 335,380 345,350 340,320 Z" 
+          fill="#163E96" />
+
+    <!-- Center Palm Junction Base -->
+    <path d="M 215,360 C 235,340 265,340 285,360 C 295,380 280,420 250,445 C 220,420 205,380 215,360 Z" fill="#0F2C6C" />
+  </g>
+</svg>
