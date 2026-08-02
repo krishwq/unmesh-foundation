@@ -11,7 +11,7 @@ export interface FormSubmissionPayload {
 }
 
 // Default Google Apps Script URL (Can be changed in UI / localStorage)
-const DEFAULT_SCRIPT_URL_KEY = 'unmesh_google_script_url';
+const DEFAULT_SCRIPT_URL_KEY = 'https://script.google.com/macros/s/AKfycbyV39QdoxdCFNrAUuv-8WKpnGF0O0_stG0r15x9GS_hC4Kfv0TW_-tq7gssQ1o-5ySq/exec';
 
 export function getStoredScriptUrl(): string {
   return localStorage.getItem(DEFAULT_SCRIPT_URL_KEY) || '';
@@ -57,11 +57,13 @@ export async function submitToGoogleSheets(
     ...formData
   };
 
+  console.log(payload);
+
   // 1. Always save to local storage
   saveLocalSubmission(payload);
 
   // 2. Try posting to Google Apps Script if URL is configured
-  const scriptUrl = getStoredScriptUrl();
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbyV39QdoxdCFNrAUuv-8WKpnGF0O0_stG0r15x9GS_hC4Kfv0TW_-tq7gssQ1o-5ySq/exec';
 
   if (scriptUrl) {
     try {
@@ -77,7 +79,7 @@ export async function submitToGoogleSheets(
       return {
         success: true,
         refId,
-        message: 'Form submitted successfully to Google Spreadsheet and recorded!'
+        message: 'Form submitted successfully!'
       };
     } catch (error) {
       console.warn('Google Script submit error (saved locally):', error);
