@@ -40,7 +40,7 @@ export function Network() {
       {/* Hero Section */}
       <section className="bg-slate-50 pt-24 pb-16 min-h-[60vh] flex items-center relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000" alt="Hospital Network" className="w-full h-full object-cover opacity-20" />
+          <img src="/images/network.png" alt="Hospital Network" className="w-full h-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-50/90 to-transparent"></div>
         </div>
         
@@ -58,7 +58,7 @@ export function Network() {
                 <Search className="w-5 h-5" />
                 Find a Partner
               </Link>
-              <Link to="/become-partner" className="bg-white text-[#163E96] border border-slate-200 px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors shadow-sm text-xs uppercase tracking-widest">
+              <Link to="/contact" className="bg-white text-[#163E96] border border-slate-200 px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors shadow-sm text-xs uppercase tracking-widest">
                 <UserPlus className="w-5 h-5" />
                 Partner With Us
               </Link>

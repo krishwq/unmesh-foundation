@@ -3,7 +3,7 @@ import { Camera } from 'lucide-react';
 
 export function Gallery() {
   const images = [
-    { id: 1, title: 'Rural Health Camp', category: 'Healthcare', url: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5eb2?auto=format&fit=crop&q=80&w=600' },
+    { id: 1, title: 'Rural Health Camp', category: 'Healthcare', url: '/images/rural_health.png' },
     { id: 2, title: 'Senior Citizen Wellness', category: 'Elder Care', url: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&q=80&w=600' },
     { id: 3, title: 'Skill Training Batch 2024', category: 'Education', url: 'https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&q=80&w=600' },
     { id: 4, title: 'Blood Donation Drive', category: 'Healthcare', url: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&q=80&w=600' },

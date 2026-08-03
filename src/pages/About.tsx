@@ -60,12 +60,12 @@ export function About() {
             >
               <div className="grid grid-cols-2 gap-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1551076805-e18690c5e45e?auto=format&fit=crop&q=80&w=600" 
+                  src="/images/medical.png" 
                   alt="Medical facility" 
                   className="rounded-3xl w-full h-72 object-cover shadow-sm"
                 />
                 <img 
-                  src="https://images.unsplash.com/photo-1582750433449-648ed127d09e?auto=format&fit=crop&q=80&w=600" 
+                  src="/images/doctor.png" 
                   alt="Doctor consultation" 
                   className="rounded-3xl w-full h-72 object-cover mt-12 shadow-sm"
                 />

@@ -60,14 +60,14 @@ export function Home() {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
             {[
-              { label: 'Healthcare Services', value: '[00,000]+', icon: Activity, color: 'text-blue-600', bg: 'bg-blue-50' },
-              { label: 'Senior Citizens Supported', value: '[0,000]+', icon: Users, color: 'text-red-600', bg: 'bg-red-50' },
-              { label: 'Health Camps', value: '[00]+', icon: Microscope, color: 'text-green-600', bg: 'bg-green-50' },
-              { label: 'Legal Aid Cases', value: '[000]+', icon: Scale, color: 'text-orange-600', bg: 'bg-orange-50' },
-              { label: 'Skill Development Students', value: '[0,000]+', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50' },
-              { label: 'Volunteers', value: '[0,000]+', icon: Heart, color: 'text-pink-600', bg: 'bg-pink-50' },
-              { label: 'Partner Hospitals', value: '[00]+', icon: Shield, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-              { label: 'Qualified Doctors', value: '[000]+', icon: Activity, color: 'text-teal-600', bg: 'bg-teal-50' }
+              { label: 'Healthcare Services', value: '[10,000]+', icon: Activity, color: 'text-blue-600', bg: 'bg-blue-50' },
+              { label: 'Senior Citizens Supported', value: '[1,000]+', icon: Users, color: 'text-red-600', bg: 'bg-red-50' },
+              { label: 'Health Camps', value: '[15]+', icon: Microscope, color: 'text-green-600', bg: 'bg-green-50' },
+              { label: 'Legal Aid Cases', value: '[90]+', icon: Scale, color: 'text-orange-600', bg: 'bg-orange-50' },
+              { label: 'Skill Development Students', value: '[3,000]+', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50' },
+              { label: 'Volunteers', value: '[1,500]+', icon: Heart, color: 'text-pink-600', bg: 'bg-pink-50' },
+              { label: 'Partner Hospitals', value: '[5]+', icon: Shield, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+              { label: 'Qualified Doctors', value: '[10]+', icon: Activity, color: 'text-teal-600', bg: 'bg-teal-50' }
             ].map((stat, idx) => (
               <div key={idx} className="bg-slate-50 rounded-3xl p-6 text-center border border-slate-100 hover:shadow-lg transition-all duration-300 group">
                 <div className={`w-12 h-12 mx-auto rounded-full ${stat.bg} ${stat.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>

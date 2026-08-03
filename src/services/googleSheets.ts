@@ -4,14 +4,14 @@
  */
 
 export interface FormSubmissionPayload {
-  action: 'donation' | 'volunteer' | 'book_test';
+  action: 'donation' | 'volunteer' | 'book_test' | 'contact';
   timestamp?: string;
   id?: string;
   [key: string]: any;
 }
 
 // Default Google Apps Script URL (Can be changed in UI / localStorage)
-const DEFAULT_SCRIPT_URL_KEY = 'https://script.google.com/macros/s/AKfycbyV39QdoxdCFNrAUuv-8WKpnGF0O0_stG0r15x9GS_hC4Kfv0TW_-tq7gssQ1o-5ySq/exec';
+const DEFAULT_SCRIPT_URL_KEY = 'unmesh_google_script_url';
 
 export function getStoredScriptUrl(): string {
   return localStorage.getItem(DEFAULT_SCRIPT_URL_KEY) || '';
@@ -45,7 +45,7 @@ export function saveLocalSubmission(payload: FormSubmissionPayload): void {
  * Submit form payload to Google Apps Script Web App
  */
 export async function submitToGoogleSheets(
-  action: 'donation' | 'volunteer' | 'book_test',
+  action: 'donation' | 'volunteer' | 'book_test' | 'contact',
   formData: Record<string, any>
 ): Promise<{ success: boolean; refId: string; message: string }> {
   const refId = 'UNM-' + action.toUpperCase().substring(0, 3) + '-' + Math.floor(100000 + Math.random() * 900000);
@@ -56,8 +56,6 @@ export async function submitToGoogleSheets(
     formattedDate: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
     ...formData
   };
-
-  console.log(payload);
 
   // 1. Always save to local storage
   saveLocalSubmission(payload);
@@ -79,7 +77,7 @@ export async function submitToGoogleSheets(
       return {
         success: true,
         refId,
-        message: 'Form submitted successfully!'
+        message: 'Form submitted successfully to Google Spreadsheet and recorded!'
       };
     } catch (error) {
       console.warn('Google Script submit error (saved locally):', error);
@@ -178,6 +176,7 @@ function getOrCreateSheetName(action) {
   if (action === 'donation') return 'Donations';
   if (action === 'volunteer') return 'Volunteers';
   if (action === 'book_test') return 'Test_Bookings';
+  if (action === 'contact') return 'Contact_Enquiries';
   return 'Submissions';
 }
 

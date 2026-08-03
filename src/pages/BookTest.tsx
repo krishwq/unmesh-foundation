@@ -9,50 +9,15 @@ export const CLINIC_LOCATIONS = [
     id: 'kolkata-central',
     name: 'Unmesh Healthcare & Pathology Center - Central Kolkata',
     type: 'Main Diagnostic Hub',
-    address: '58, Canal Circular Road, Ultadanga, Kolkata, West Bengal - 700067',
-    landmark: 'Near Ultadanga Railway Station',
+    address: 'Ground Floor, Basanti Apartment3, Bipin Ganguly Road, Kundu BaganGhughudanga, Kol-700030',
+    landmark: 'Near Dum Dum Railway Station',
     phone: '+91 9073380904',
     secondaryPhone: '+91 33 2320 2122',
     hours: 'Mon - Sat: 7:00 AM - 8:00 PM | Sun: 7:00 AM - 2:00 PM',
     facilities: ['Pathology', 'Home Collection', 'X-Ray', 'ECG', 'Doctor Consultation'],
     mapUrl: 'https://maps.google.com/?q=Ultadanga+Kolkata'
   },
-  {
-    id: 'salt-lake',
-    name: 'Unmesh Diagnostic & Sample Collection Lab - Salt Lake',
-    type: 'Specialized Diagnostic Wing',
-    address: 'DD-18/1, Sector-1, Salt Lake City, Bidhannagar, Kolkata - 700064',
-    landmark: 'Near City Centre 1',
-    phone: '+91 9830123456',
-    secondaryPhone: '+91 9073380904',
-    hours: 'Mon - Sat: 7:30 AM - 7:00 PM | Sun: 8:00 AM - 1:00 PM',
-    facilities: ['Home Sample Collection', 'Blood Tests', 'Thyroid Profile', 'Lipid Panel'],
-    mapUrl: 'https://maps.google.com/?q=Salt+Lake+Sector+1+Kolkata'
-  },
-  {
-    id: 'howrah-center',
-    name: 'Unmesh Community Health Clinic & Lab - Howrah',
-    type: 'Community Clinic & Diagnostics',
-    address: '12, GT Road, Near Howrah Railway Station, Howrah - 711101',
-    landmark: 'Opposite Howrah Bus Terminus',
-    phone: '+91 33 2320 2122',
-    secondaryPhone: '+91 9073380904',
-    hours: 'Mon - Sat: 8:00 AM - 7:30 PM | Sun: Closed',
-    facilities: ['Primary Care', 'Pathology Lab', 'Physiotherapy', 'Senior Citizen Care'],
-    mapUrl: 'https://maps.google.com/?q=Howrah+GT+Road'
-  },
-  {
-    id: 'mukundapur-center',
-    name: 'Unmesh Healthcare Center - E.M. Bypass Mukundapur',
-    type: 'Super-Specialty Diagnostic Unit',
-    address: '127, Mukundapur, E.M. Bypass, Kolkata, West Bengal - 700099',
-    landmark: 'Adjacent to Rabindranath Tagore Hospital',
-    phone: '+91 9073380905',
-    secondaryPhone: '+91 9073380904',
-    hours: 'Mon - Sun: 7:00 AM - 9:00 PM (24/7 Emergency Assistance)',
-    facilities: ['Advanced Biochemistry', 'Hormone Testing', 'Pre-Op Screening', 'Cardiac Care'],
-    mapUrl: 'https://maps.google.com/?q=Mukundapur+Kolkata'
-  }
+  
 ];
 
 const POPULAR_TESTS = [
@@ -349,10 +314,10 @@ export function BookTest() {
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] bg-white font-medium text-slate-800 text-sm"
                         >
-                          <option value="Kolkata Central (Ultadanga)">Kolkata Central (Ultadanga)</option>
-                          <option value="Salt Lake Sector-1">Salt Lake Sector-1</option>
+                          <option value="Kolkata Central (Ultadanga)">Kolkata Central (Dum Dum)</option>
+                          {/* <option value="Salt Lake Sector-1">Salt Lake Sector-1</option>
                           <option value="Howrah GT Road">Howrah GT Road</option>
-                          <option value="Mukundapur E.M. Bypass">Mukundapur E.M. Bypass</option>
+                          <option value="Mukundapur E.M. Bypass">Mukundapur E.M. Bypass</option> */}
                         </select>
                       </div>
                     </div>
