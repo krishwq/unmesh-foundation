@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Mail,
   Phone,
@@ -10,7 +10,7 @@ import {
   Linkedin,
   Microscope,
 } from "lucide-react";
-import { PrivacyPolicyModal } from './PrivacyPolicyModal';
+import { PrivacyPolicyModal } from "./PrivacyPolicyModal";
 
 export function Footer() {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
@@ -258,8 +258,11 @@ export function Footer() {
         </div>
 
         <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider text-center md:text-right flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-          <span>© {new Date().getFullYear()} Unmesh Foundation (উন্মেশ ফাউন্ডেশন). Registered NGO. All rights reserved.</span>
-          <button 
+          <span>
+            © {new Date().getFullYear()} Unmesh Foundation (উন্মেশ ফাউন্ডেশন).
+            Registered NGO. All rights reserved.
+          </span>
+          <button
             onClick={() => setIsPrivacyOpen(true)}
             className="text-amber-400 hover:underline font-bold cursor-pointer"
           >
@@ -279,23 +282,29 @@ export function Footer() {
       </a>
 
       {/* Privacy Policy Modal */}
-      <PrivacyPolicyModal 
-        isOpen={isPrivacyOpen} 
-        onClose={() => setIsPrivacyOpen(false)} 
+      <PrivacyPolicyModal
+        isOpen={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
       />
 
       {/* Developer Branding */}
       <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-slate-800/60 text-center text-[11px] text-slate-500 font-medium">
-        Made by{" "}
-        <a
-          href="https://nexora-techsolutions.vercel.app/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-amber-400 hover:text-amber-300 font-semibold transition-colors"
-        >
-          Nexoratechsolutions
-        </a>
-      </div>
+  <span 
+    style={{ color: '#FCFCFC', fontFamily: "'Libertinus Serif', Georgia, serif" }} 
+    className="font-semibold flex justify-center items-center gap-1 text-xs"
+  >
+    Made with Care ❤️ by{' '}
+    <a 
+      href="https://nexora-techsolutions.vercel.app/" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="font-bold hover:underline transition-all"
+      style={{ color: '#F29F05', fontFamily: "'Libertinus Serif', Georgia, serif" }}
+    >
+      Nexora Technologies
+    </a>
+  </span>
+</div>
     </footer>
   );
 }

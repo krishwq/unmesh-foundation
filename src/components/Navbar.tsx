@@ -4,17 +4,17 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const NAV_LINKS = [
-  { name: 'Home', path: '/' },
+  // { name: 'Home', path: '/' },
   { name: 'About Us', path: '/about' },
   { name: 'Healthcare', path: '/healthcare' },
-  // { name: 'Book Test', path: '/book-test' },
+  // // { name: 'Book Test', path: '/book-test' },
   { name: 'Services', path: '/services' },
-  { name: 'Network', path: '/network' },
+  // // { name: 'Network', path: '/network' },
   { name: 'Legal Aid', path: '/legal-aid' },
   { name: 'Skill Development', path: '/skill-development' },
   { name: 'Medical Team', path: '/team' },
-  { name: 'Gallery', path: '/gallery' },
-  { name: 'Blog', path: '/blog' },
+  // { name: 'Gallery', path: '/gallery' },
+  // { name: 'Blog', path: '/blog' },
   { name: 'CSR', path: '/csr' },
   { name: 'Contact', path: '/contact' },
 ];

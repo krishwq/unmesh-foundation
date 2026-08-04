@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { SEO } from '../components/SEO';
-import { Microscope, PhoneCall, MapPin, Calendar, Clock, CheckCircle2, User, Phone, Home, RefreshCw, Send, AlertCircle, Building2, ShieldCheck } from 'lucide-react';
+import { Microscope, PhoneCall, MapPin, Calendar, Clock, CheckCircle2, User, Phone, Home, RefreshCw, Send, AlertCircle, Building2, ShieldCheck, Search, Filter, X, Check, FileText } from 'lucide-react';
 import { submitToGoogleSheets } from '../services/googleSheets';
+import { DIAGNOSTIC_CATEGORIES, ALL_TESTS } from '../data/diagnosticTests';
 
 // Complete List of Unmesh Foundation Partner Clinics & Diagnostic Centers
 export const CLINIC_LOCATIONS = [
@@ -11,51 +12,120 @@ export const CLINIC_LOCATIONS = [
     type: 'Main Diagnostic Hub',
     address: 'Ground Floor, Basanti Apartment3, Bipin Ganguly Road, Kundu BaganGhughudanga, Kol-700030',
     landmark: 'Near Dum Dum Railway Station',
-    phone: '+91 9073380904',
-    secondaryPhone: '+91 33 2320 2122',
+    phone: '+91 90733 80904',
+    secondaryPhone: '+91 79805 10804',
     hours: 'Mon - Sat: 7:00 AM - 8:00 PM | Sun: 7:00 AM - 2:00 PM',
     facilities: ['Pathology', 'Home Collection', 'X-Ray', 'ECG', 'Doctor Consultation'],
-    mapUrl: 'https://maps.google.com/?q=Ultadanga+Kolkata'
+    mapUrl: 'https://maps.app.goo.gl/eaaSfP3VgVusCoXJ6'
   },
-  
 ];
 
-const POPULAR_TESTS = [
+const POPULAR_PACKAGES = [
   'Full Body Health Checkup',
-  'Complete Blood Count (CBC)',
-  'Fasting & PP Blood Sugar',
-  'Lipid Profile (Cholesterol)',
-  'Thyroid Profile (T3, T4, TSH)',
-  'Liver Function Test (LFT)',
-  'Kidney Function Test (KFT)',
-  'Vitamin D3 & Vitamin B12',
-  'HbA1c Diabetes Monitoring',
-  'ECG / Electrocardiogram',
-  'Chest X-Ray Digital',
-  'Home Sample Collection Request'
+  'Complete Blood Count (CBC) with ESR',
+  'Fasting & Post Prandial Blood Sugar',
+  'Lipid Profile (Total Cholesterol, Triglycerides, HDL, LDL)',
+  'Thyroid Profile (TSH, Free T3, Free T4)',
+  'Liver Function Test (LFT) Panel',
+  'Urea & Creatinine (Kidney Panel)',
+  'Vitamin D3 & Vitamin B12 Package',
+  'HbA1c (Glycosylated Hemoglobin)',
+  'Dengue Profile (NS1, IgM, IgG)',
+  'Hb Electrophoresis / Thalassemia Screen'
 ];
 
 export function BookTest() {
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState({
     name: '',
     age: '',
+    testCategory: 'General / Popular Packages',
     testDescription: 'Full Body Health Checkup',
     customTest: '',
     address: '',
     mobile: '',
     datePreferred: '',
-    preferredLocation: 'Kolkata Central (Ultadanga)',
+    preferredLocation: 'Kolkata Central (Dum Dum)',
     sampleCollectionType: 'Clinic Visit'
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingRef, setBookingRef] = useState<string | null>(null);
 
+  // Close search suggestions on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Filter tests based on category and search query
+  const filteredSuggestions = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const query = searchQuery.toLowerCase().trim();
+
+    return ALL_TESTS.filter(t => {
+      const matchesCategory = selectedCategoryId === 'all' || 
+        DIAGNOSTIC_CATEGORIES.find(c => c.id === selectedCategoryId)?.name === t.category;
+      const matchesQuery = t.name.toLowerCase().includes(query) || t.category.toLowerCase().includes(query);
+      return matchesCategory && matchesQuery;
+    }).slice(0, 12); // top 12 suggestions
+  }, [searchQuery, selectedCategoryId]);
+
+  // Tests list for the secondary dropdown based on selected category
+  const availableTestsForCategory = useMemo(() => {
+    if (selectedCategoryId === 'all') {
+      return POPULAR_PACKAGES;
+    }
+    const cat = DIAGNOSTIC_CATEGORIES.find(c => c.id === selectedCategoryId);
+    return cat ? cat.tests : POPULAR_PACKAGES;
+  }, [selectedCategoryId]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const catId = e.target.value;
+    setSelectedCategoryId(catId);
+    
+    if (catId === 'all') {
+      setFormData(prev => ({
+        ...prev,
+        testCategory: 'General / Popular Packages',
+        testDescription: POPULAR_PACKAGES[0]
+      }));
+    } else {
+      const categoryObj = DIAGNOSTIC_CATEGORIES.find(c => c.id === catId);
+      if (categoryObj && categoryObj.tests.length > 0) {
+        setFormData(prev => ({
+          ...prev,
+          testCategory: categoryObj.name,
+          testDescription: categoryObj.tests[0]
+        }));
+      }
+    }
+  };
+
+  const handleSelectTestSuggestion = (testName: string, categoryName: string) => {
+    setFormData(prev => ({
+      ...prev,
+      testCategory: categoryName,
+      testDescription: testName
+    }));
+    setSearchQuery(testName);
+    setIsSearchOpen(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -73,6 +143,7 @@ export function BookTest() {
       const result = await submitToGoogleSheets('book_test', {
         name: formData.name,
         age: formData.age,
+        testCategory: formData.testCategory,
         testDescription: finalTest,
         address: formData.address,
         mobile: formData.mobile,
@@ -94,14 +165,17 @@ export function BookTest() {
     setFormData({
       name: '',
       age: '',
+      testCategory: 'General / Popular Packages',
       testDescription: 'Full Body Health Checkup',
       customTest: '',
       address: '',
       mobile: '',
       datePreferred: '',
-      preferredLocation: 'Kolkata Central (Ultadanga)',
+      preferredLocation: 'Kolkata Central (Dum Dum)',
       sampleCollectionType: 'Clinic Visit'
     });
+    setSelectedCategoryId('all');
+    setSearchQuery('');
     setBookingRef(null);
   };
 
@@ -149,14 +223,14 @@ export function BookTest() {
                 className="flex-1 sm:flex-initial px-6 py-3.5 bg-slate-950 hover:bg-slate-900 text-white font-black text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md flex items-center justify-center gap-2"
               >
                 <Phone className="w-4 h-4 text-amber-400" />
-                <span>+91 9073380904</span>
+                <span>+91 90733 80904</span>
               </a>
               <a
-                href="tel:+919830123456"
+                href="tel:+917980510804"
                 className="flex-1 sm:flex-initial px-6 py-3.5 bg-white hover:bg-slate-100 text-slate-950 font-black text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 border border-slate-300"
               >
                 <Phone className="w-4 h-4 text-[#163E96]" />
-                <span>+91 9830123456</span>
+                <span>+91 79805 10804</span>
               </a>
             </div>
           </div>
@@ -218,34 +292,155 @@ export function BookTest() {
                       </div>
                     </div>
 
-                    {/* Test Description Selector */}
+                    {/* Step 1: Select Category */}
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                        Test Description / Package <span className="text-red-500">*</span>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                        <Filter className="w-3.5 h-3.5 text-[#163E96]" />
+                        <span>1. Select Diagnostic Category</span> <span className="text-red-500">*</span>
                       </label>
                       <select
-                        name="testDescription"
-                        value={formData.testDescription}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] bg-white font-medium text-slate-800 text-sm mb-2"
+                        value={selectedCategoryId}
+                        onChange={handleCategoryChange}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] bg-white font-bold text-slate-800 text-sm shadow-xs"
                       >
-                        {POPULAR_TESTS.map(t => (
-                          <option key={t} value={t}>{t}</option>
+                        <option value="all"> All Categories (Search Across All 250+ Tests & Packages)</option>
+                        {DIAGNOSTIC_CATEGORIES.map(cat => (
+                          <option key={cat.id} value={cat.id}>
+                            {cat.name} ({cat.tests.length} Tests)
+                          </option>
                         ))}
-                        <option value="Other / Custom Test">Other / Custom Pathology Test</option>
                       </select>
+                    </div>
 
+                    {/* Step 2: Search Test with Live Suggestions & Dropdown Selection */}
+                    <div className="space-y-3 relative" ref={searchRef}>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <Search className="w-3.5 h-3.5 text-[#163E96]" />
+                        <span>2. Search Test Name or Select from Dropdown</span> <span className="text-red-500">*</span>
+                      </label>
+
+                      {/* Instant Search Input */}
+                      <div className="relative">
+                        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                        <input
+                          type="text"
+                          placeholder="Type test name (e.g. CBC, Dengue, HbA1c, Thyroid, Biopsy, Culture)..."
+                          value={searchQuery}
+                          onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setIsSearchOpen(true);
+                          }}
+                          onFocus={() => setIsSearchOpen(true)}
+                          className="w-full pl-10 pr-10 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] focus:ring-2 focus:ring-[#163E96]/20 text-sm font-medium text-slate-800"
+                        />
+                        {searchQuery && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSearchQuery('');
+                              setIsSearchOpen(false);
+                            }}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        )}
+
+                        {/* Floating Live Suggestions Dropdown */}
+                        {isSearchOpen && searchQuery.trim().length > 0 && (
+                          <div className="absolute z-30 top-full left-0 right-0 mt-1.5 bg-white border border-slate-200 rounded-2xl shadow-2xl max-h-64 overflow-y-auto divide-y divide-slate-100">
+                            {filteredSuggestions.length > 0 ? (
+                              filteredSuggestions.map((item, idx) => (
+                                <button
+                                  type="button"
+                                  key={idx}
+                                  onClick={() => handleSelectTestSuggestion(item.name, item.category)}
+                                  className="w-full text-left px-4 py-3 hover:bg-blue-50/80 transition-colors flex items-start justify-between gap-3 group"
+                                >
+                                  <div>
+                                    <div className="text-xs font-bold text-slate-900 group-hover:text-[#163E96]">
+                                      {item.name}
+                                    </div>
+                                    <div className="text-[10px] text-slate-400 font-medium mt-0.5">
+                                      Category: <span className="text-slate-600 font-semibold">{item.category}</span>
+                                    </div>
+                                  </div>
+                                  <Check className="w-4 h-4 text-emerald-600 opacity-0 group-hover:opacity-100 shrink-0 mt-0.5" />
+                                </button>
+                              ))
+                            ) : (
+                              <div className="px-4 py-4 text-center text-xs text-slate-500 font-medium">
+                                No test found matching "{searchQuery}". You can choose "Other / Custom Test" below to write prescription notes.
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Select Box for Category Tests */}
+                      <div>
+                        <select
+                          name="testDescription"
+                          value={formData.testDescription}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (val === 'Other / Custom Test') {
+                              setFormData(prev => ({
+                                ...prev,
+                                testDescription: val
+                              }));
+                            } else {
+                              const found = ALL_TESTS.find(t => t.name === val);
+                              setFormData(prev => ({
+                                ...prev,
+                                testDescription: val,
+                                testCategory: found ? found.category : (selectedCategoryId !== 'all' ? DIAGNOSTIC_CATEGORIES.find(c => c.id === selectedCategoryId)?.name || 'General' : 'General / Popular Packages')
+                              }));
+                            }
+                          }}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] bg-white font-medium text-slate-800 text-sm"
+                        >
+                          <optgroup label={selectedCategoryId === 'all' ? 'Popular Health Packages' : (DIAGNOSTIC_CATEGORIES.find(c => c.id === selectedCategoryId)?.name || 'Tests')}>
+                            {availableTestsForCategory.map(t => (
+                              <option key={t} value={t}>{t}</option>
+                            ))}
+                          </optgroup>
+                          <option value="Other / Custom Test">Other / Custom Pathology Test (Write Prescription Notes)</option>
+                        </select>
+                      </div>
+
+                      {/* Custom Test Notes TextArea */}
                       {formData.testDescription === 'Other / Custom Test' && (
                         <textarea
                           name="customTest"
                           rows={2}
                           required
-                          placeholder="Specify the exact test name(s) or doctor prescription..."
+                          placeholder="Specify the exact test name(s) or doctor prescription details..."
                           value={formData.customTest}
                           onChange={handleChange}
                           className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:border-[#163E96] text-sm font-medium resize-none"
                         ></textarea>
                       )}
+
+                      {/* Selected Test Confirmation Card */}
+                      <div className="bg-blue-50/80 border border-blue-200/80 rounded-2xl p-3.5 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <div className="w-8 h-8 rounded-xl bg-[#163E96] text-white flex items-center justify-center shrink-0">
+                            <Microscope className="w-4 h-4" />
+                          </div>
+                          <div className="truncate">
+                            <div className="text-[10px] font-bold text-[#163E96] uppercase tracking-wider">
+                              Category: {formData.testCategory}
+                            </div>
+                            <div className="text-xs font-black text-slate-900 truncate">
+                              {formData.testDescription === 'Other / Custom Test' ? (formData.customTest || 'Custom Test Prescription') : formData.testDescription}
+                            </div>
+                          </div>
+                        </div>
+                        <span className="shrink-0 text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                          Selected
+                        </span>
+                      </div>
                     </div>
 
                     {/* Mobile & Date Preferred */}
@@ -360,7 +555,7 @@ export function BookTest() {
 
                     <div className="flex items-center gap-2 text-xs text-slate-500 justify-center font-medium pt-2">
                       <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                      <span>Data automatically sent to Google Spreadsheet & Lab Coordinator</span>
+                      <span>Data automatically sent to Lab Coordinator</span>
                     </div>
                   </form>
                 </>
@@ -375,6 +570,8 @@ export function BookTest() {
                   </p>
 
                   <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2 mb-6 max-w-md mx-auto">
+                    <div className="flex justify-between"><span className="text-slate-500">Category:</span> <span className="font-bold text-[#163E96]">{formData.testCategory}</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500">Test:</span> <span className="font-bold text-slate-900">{formData.testDescription === 'Other / Custom Test' ? formData.customTest : formData.testDescription}</span></div>
                     <div className="flex justify-between"><span className="text-slate-500">Age:</span> <span className="font-bold">{formData.age} Yrs</span></div>
                     <div className="flex justify-between"><span className="text-slate-500">Mobile:</span> <span className="font-bold">{formData.mobile}</span></div>
                     <div className="flex justify-between"><span className="text-slate-500">Mode:</span> <span className="font-bold text-emerald-700">{formData.sampleCollectionType}</span></div>

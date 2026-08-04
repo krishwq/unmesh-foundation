@@ -1,5 +1,5 @@
 import { SEO } from '../components/SEO';
-import { Calendar, Languages, Shield, Clock } from 'lucide-react';
+import { Calendar, Languages, Shield, Clock,Phone,PhoneCall } from 'lucide-react';
 
 interface DoctorProfile {
   id: string;
@@ -9,55 +9,41 @@ interface DoctorProfile {
   specialization: string;
   experience: string;
   languages: string[];
-  availability: string;
   photoUrl: string;
 }
 
 const DOCTORS: DoctorProfile[] = [
   {
     id: '1',
-    name: 'Dr. Amitabha Ghosh',
-    qualification: 'MBBS, MD (Medicine)',
-    registrationNumber: 'WBMC-12345',
-    specialization: 'General Physician',
+    name: 'Dr. Subhadip Rakshit',
+    qualification: 'MBBS, MD ,DM',
+    registrationNumber: 'WBMC-76725',
+    specialization: 'Gastroenterology',
     experience: '15+ Years',
     languages: ['English', 'Bengali', 'Hindi'],
-    availability: 'Mon, Wed, Fri (10 AM - 1 PM)',
-    photoUrl: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400'
+    photoUrl: '/images/subhadip.jpeg'
   },
   {
     id: '2',
-    name: 'Dr. Ramesh Kumar',
-    qualification: 'MS (Orthopedics)',
+    name: 'Dr. Soma Biswas',
+    qualification: 'MBBS, DGO, MD(G&D), FIAOG',
     registrationNumber: 'WBMC-22345',
-    specialization: 'Orthopedic Surgeon',
+    specialization: 'GYNECOLOGIST',
     experience: '12+ Years',
     languages: ['English', 'Bengali'],
-    availability: 'Tue, Thu (4 PM - 7 PM)',
-    photoUrl: 'https://images.unsplash.com/photo-1594824436998-d88d9def22bc?auto=format&fit=crop&q=80&w=400'
+    photoUrl: '/images/soma.jpeg'
   },
   {
     id: '3',
-    name: 'Dr. Sneha Roy',
-    qualification: 'MD (Neurology), DM',
+    name: 'Dr. Swapan Mallick',
+    qualification: 'MBBS, MD, CCEBDM',
     registrationNumber: 'WBMC-33456',
-    specialization: 'Neurologist',
+    specialization: 'ONCOLOGIST',
     experience: '8+ Years',
     languages: ['English', 'Hindi'],
-    availability: 'Saturday (10 AM - 2 PM)',
-    photoUrl: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400'
+    photoUrl: '/images/swapan.png'
   },
-  {
-    id: '4',
-    name: 'Dr. Vikram Sengupta',
-    qualification: 'MD, FIPM',
-    registrationNumber: 'WBMC-44567',
-    specialization: 'Pain Management Specialist',
-    experience: '10+ Years',
-    languages: ['English', 'Bengali'],
-    availability: 'Mon to Fri (11 AM - 3 PM)',
-    photoUrl: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400'
-  }
+  
 ];
 
 export function Team() {
@@ -72,6 +58,38 @@ export function Team() {
             <p className="text-lg text-slate-600">
               A dedicated team of experienced doctors and healthcare professionals committed to providing the highest standard of medical care.
             </p>
+          </div>
+          {/* Quick Phone Call Booking Bar */}
+          <div className="bg-amber-500 text-slate-950 p-6 md:p-8 rounded-3xl shadow-lg border-2 border-amber-400 mb-12 flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-slate-950 text-amber-400 flex items-center justify-center shrink-0 shadow-md">
+                <PhoneCall className="w-7 h-7" />
+              </div>
+              <div>
+                <span className="text-xs font-black uppercase tracking-widest text-slate-900 block">Instant Phone Booking</span>
+                <h2 className="text-2xl font-black text-slate-950 mt-0.5">Prefer Booking Directly Over Phone?</h2>
+                <p className="text-xs md:text-sm font-semibold text-slate-900/80 mt-1">
+                  Call our Doctor appoinment helpline now for immediate appointment of Specialized Doctor.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap sm:flex-nowrap gap-3 w-full lg:w-auto shrink-0">
+              <a
+                href="tel:+919073380904"
+                className="flex-1 sm:flex-initial px-6 py-3.5 bg-slate-950 hover:bg-slate-900 text-white font-black text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md flex items-center justify-center gap-2"
+              >
+                <Phone className="w-4 h-4 text-amber-400" />
+                <span>+91 90733 80904</span>
+              </a>
+              <a
+                href="tel:+917980510804"
+                className="flex-1 sm:flex-initial px-6 py-3.5 bg-white hover:bg-slate-100 text-slate-950 font-black text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md flex items-center justify-center gap-2 border border-slate-300"
+              >
+                <Phone className="w-4 h-4 text-[#163E96]" />
+                <span>+91 79805 10804</span>
+              </a>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -104,15 +122,9 @@ export function Team() {
                       <Languages className="w-4 h-4 text-[#148B3A]" />
                       <span>{doctor.languages.join(', ')}</span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-slate-600 col-span-2">
-                      <Calendar className="w-4 h-4 text-[#163E96] mt-0.5 shrink-0" />
-                      <span>{doctor.availability}</span>
-                    </div>
+                    
                   </div>
                   
-                  <button className="w-full py-3 bg-[#163E96] hover:bg-[#0f2c6c] text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-colors">
-                    Book Consultation
-                  </button>
                 </div>
               </div>
             ))}
