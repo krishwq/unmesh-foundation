@@ -267,7 +267,26 @@ export function BookTest() {
                           />
                         </div>
                       </div>
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                          Collection Type
+                        </label>
+                        <select
+                          name="sampleCollectionType"
+                          value={formData.sampleCollectionType}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] bg-white font-medium text-slate-800 text-sm"
+                        >
+                          <option value="Home Sample Collection">Home Sample Collection</option>
+                          <option value="Clinic Visit">Clinic Visit</option>
+                        </select>
+                      </div>
 
+                      
+                    </div>
+
+                    {/* Sample Collection Mode & Location */}
+                    <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                           Date Preferred <span className="text-red-500">*</span>
@@ -284,24 +303,6 @@ export function BookTest() {
                             className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] focus:ring-2 focus:ring-[#163E96]/20 text-sm font-bold text-slate-800"
                           />
                         </div>
-                      </div>
-                    </div>
-
-                    {/* Sample Collection Mode & Location */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                          Collection Type
-                        </label>
-                        <select
-                          name="sampleCollectionType"
-                          value={formData.sampleCollectionType}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-[#163E96] bg-white font-medium text-slate-800 text-sm"
-                        >
-                          <option value="Home Sample Collection">Home Sample Collection</option>
-                          <option value="Clinic Visit">Clinic Visit</option>
-                        </select>
                       </div>
 
                       <div>

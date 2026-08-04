@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from 'react';
 import {
   Mail,
   Phone,
@@ -9,8 +10,10 @@ import {
   Linkedin,
   Microscope,
 } from "lucide-react";
+import { PrivacyPolicyModal } from './PrivacyPolicyModal';
 
 export function Footer() {
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   return (
     <footer className="bg-slate-900 border-t border-slate-800 px-4 sm:px-8 py-16 shrink-0 text-white">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
@@ -254,12 +257,21 @@ export function Footer() {
           </a>
         </div>
 
-        <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider text-center md:text-right">
-          © {new Date().getFullYear()} Unmesh Foundation (উন্মেশ ফাউন্ডেশন).
-          Registered NGO.
-          <br className="md:hidden" /> All rights reserved.
+        <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider text-center md:text-right flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+          <span>© {new Date().getFullYear()} Unmesh Foundation (উন্মেশ ফাউন্ডেশন). Registered NGO. All rights reserved.</span>
+          <button 
+            onClick={() => setIsPrivacyOpen(true)}
+            className="text-amber-400 hover:underline font-bold cursor-pointer"
+          >
+            Privacy Policy
+          </button>
         </div>
       </div>
+      {/* Privacy Policy Modal */}
+      <PrivacyPolicyModal 
+        isOpen={isPrivacyOpen} 
+        onClose={() => setIsPrivacyOpen(false)} 
+      />
     </footer>
   );
 }

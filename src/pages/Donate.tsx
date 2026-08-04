@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SEO } from '../components/SEO';
-import { ShieldCheck, Heart, Building2, QrCode, CheckCircle2, Copy, Check, ArrowRight, RefreshCw } from 'lucide-react';
+import { ShieldCheck, Heart, Building2, QrCode, CheckCircle2, Copy, Check, ArrowRight, RefreshCw, Phone } from 'lucide-react';
 import { submitToGoogleSheets } from '../services/googleSheets';
 
 export function Donate() {
@@ -18,6 +18,9 @@ export function Donate() {
   const [donationRefId, setDonationRefId] = useState('');
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [copiedBank, setCopiedBank] = useState(false);
+  const [copiedAccName, setCopiedAccName] = useState(false);
+  const [copiedAccNum, setCopiedAccNum] = useState(false);
+  const [copiedIfsc, setCopiedIfsc] = useState(false);
 
   const selectedAmountValue = amount === 'custom' ? customAmount : amount;
 
@@ -72,7 +75,7 @@ export function Donate() {
     setDonationRefId('');
   };
 
-  const copyToClipboard = (text: string, type: 'upi' | 'bank') => {
+  const copyToClipboard = (text: string, type: 'upi' | 'bank' | 'accName' | 'accNum' | 'ifsc') => {
     navigator.clipboard.writeText(text);
     if (type === 'upi') {
       setCopiedUpi(true);
@@ -80,6 +83,15 @@ export function Donate() {
     } else if (type === 'bank') {
       setCopiedBank(true);
       setTimeout(() => setCopiedBank(false), 2000);
+    } else if (type === 'accName') {
+      setCopiedAccName(true);
+      setTimeout(() => setCopiedAccName(false), 2000);
+    } else if (type === 'accNum') {
+      setCopiedAccNum(true);
+      setTimeout(() => setCopiedAccNum(false), 2000);
+    } else if (type === 'ifsc') {
+      setCopiedIfsc(true);
+      setTimeout(() => setCopiedIfsc(false), 2000);
     }
   };
 
@@ -270,7 +282,6 @@ export function Donate() {
                     </>
                   ) : (
                     <>
-                      <Heart className="w-5 h-5" fill="currentColor" />
                       <span>Proceed to Payment (₹{Number(selectedAmountValue || 0).toLocaleString('en-IN')})</span>
                       <ArrowRight className="w-5 h-5 ml-1" />
                     </>
@@ -321,6 +332,33 @@ export function Donate() {
                 </div>
               </div>
 
+              {/* Disclaimer for ₹10,000+ donations */}
+              {Number(selectedAmountValue || 0) >= 10000 && (
+                <div className="bg-amber-500/10 border-2 border-amber-500 p-5 rounded-2xl shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-amber-900 uppercase tracking-wider mb-0.5">Tax Benefit Disclaimer</div>
+                      <p className="text-sm font-extrabold text-slate-900">
+                        Contact to this number to avail tax benefit: <a href="tel:+919073380904" className="text-[#163E96] hover:underline font-black">+91-9073380904</a>
+                      </p>
+                      <p className="text-xs text-slate-600 mt-1">
+                        For donations of ₹10,000 or more, please reach out to our team at +91-9073380904 to assist with 80G tax exemption processing & receipt verification.
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href="tel:+919073380904"
+                    className="px-4 py-2.5 bg-[#163E96] hover:bg-[#0f2c6c] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shrink-0 flex items-center gap-2 shadow-sm"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>Call +91-9073380904</span>
+                  </a>
+                </div>
+              )}
+
               {/* Payment Details Grid */}
               <div className="grid md:grid-cols-2 gap-8">
                 
@@ -348,25 +386,68 @@ export function Donate() {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Account Name</div>
-                        <div className="font-bold text-slate-800 text-base">Unmesh Foundation</div>
+                      {/* Account Name */}
+                      <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Account Name</div>
+                          <button
+                            type="button"
+                            onClick={() => copyToClipboard('Unmesh Foundation', 'accName')}
+                            className="px-2 py-0.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#163E96] text-[11px] font-bold transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
+                            title="Copy Account Name"
+                          >
+                            {copiedAccName ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                            <span>{copiedAccName ? 'Copied' : 'Copy'}</span>
+                          </button>
+                        </div>
+                        <div className="font-bold text-slate-800 text-sm sm:text-base">Unmesh Foundation</div>
                       </div>
-                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+
+                      {/* Bank Name */}
+                      <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
                         <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Bank Name</div>
-                        <div className="font-bold text-slate-800 text-base">State Bank of India (SBI)</div>
+                        <div className="font-bold text-slate-800 text-sm sm:text-base">State Bank of India (SBI)</div>
                       </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Account Number</div>
-                          <div className="font-bold text-slate-900 font-mono text-base tracking-wider">31456789012</div>
+
+                      {/* Account Number & IFSC Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {/* Account Number */}
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Account Number</div>
+                            <button
+                              type="button"
+                              onClick={() => copyToClipboard('31456789012', 'accNum')}
+                              className="px-2 py-0.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#163E96] text-[11px] font-bold transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
+                              title="Copy Account Number"
+                            >
+                              {copiedAccNum ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                              <span>{copiedAccNum ? 'Copied' : 'Copy'}</span>
+                            </button>
+                          </div>
+                          <div className="font-bold text-slate-900 font-mono text-sm sm:text-base tracking-wider break-all">31456789012</div>
                         </div>
-                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">IFSC Code</div>
-                          <div className="font-bold text-slate-900 font-mono text-base tracking-wider">SBIN0001234</div>
+
+                        {/* IFSC Code */}
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">IFSC Code</div>
+                            <button
+                              type="button"
+                              onClick={() => copyToClipboard('SBIN0001234', 'ifsc')}
+                              className="px-2 py-0.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#163E96] text-[11px] font-bold transition-colors flex items-center gap-1 shrink-0 cursor-pointer"
+                              title="Copy IFSC Code"
+                            >
+                              {copiedIfsc ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                              <span>{copiedIfsc ? 'Copied' : 'Copy'}</span>
+                            </button>
+                          </div>
+                          <div className="font-bold text-slate-900 font-mono text-sm sm:text-base tracking-wider break-all">SBIN0001234</div>
                         </div>
                       </div>
-                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+
+                      {/* Branch */}
+                      <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
                         <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Branch</div>
                         <div className="font-medium text-slate-700 text-xs">Kolkata Main Branch, West Bengal</div>
                       </div>
