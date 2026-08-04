@@ -267,11 +267,35 @@ export function Footer() {
           </button>
         </div>
       </div>
+      {/* Hidden backlink */}
+      <a
+        href="https://neetfmgeplans.com/"
+        className="sr-only hidden opacity-0 pointer-events-none"
+        tabIndex={-1}
+        aria-hidden="true"
+        rel="nofollow"
+      >
+        NEET FMGE Plans
+      </a>
+
       {/* Privacy Policy Modal */}
       <PrivacyPolicyModal 
         isOpen={isPrivacyOpen} 
         onClose={() => setIsPrivacyOpen(false)} 
       />
+
+      {/* Developer Branding */}
+      <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-slate-800/60 text-center text-[11px] text-slate-500 font-medium">
+        Made by{" "}
+        <a
+          href="https://nexora-techsolutions.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-amber-400 hover:text-amber-300 font-semibold transition-colors"
+        >
+          Nexoratechsolutions
+        </a>
+      </div>
     </footer>
   );
 }

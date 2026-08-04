@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { name: 'Home', path: '/' },
   { name: 'About Us', path: '/about' },
   { name: 'Healthcare', path: '/healthcare' },
-  { name: 'Book Test', path: '/book-test' },
+  // { name: 'Book Test', path: '/book-test' },
   { name: 'Services', path: '/services' },
   { name: 'Network', path: '/network' },
   { name: 'Legal Aid', path: '/legal-aid' },
